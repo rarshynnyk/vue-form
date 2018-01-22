@@ -1,12 +1,33 @@
 <template>
   <div id="app">
-    <router-view/>
+    <UserForm />
+    <UserTable :users="users" />
   </div>
 </template>
 
 <script>
+import UserForm from './components/UserForm'
+import UserTable from './components/UserTable'
+import bus from './bus'
+
 export default {
-  name: 'app'
+  data () {
+    return {
+      users: JSON.parse(localStorage.getItem('users') || '[]')
+    }
+  },
+
+  created () {
+    bus.$on('user-added', data => {
+      this.users.push(Object.assign({}, data))
+      localStorage.setItem('users', JSON.stringify(this.users))
+    })
+  },
+
+  components: {
+    UserForm,
+    UserTable
+  }
 }
 </script>
 

@@ -1,5 +1,6 @@
 <template>
   <div v-if="users.length">
+    <h1>{{ title }}</h1>
     <table class="table">
       <thead>
         <th>User First Name</th>
@@ -7,6 +8,9 @@
         <th>User Email</th>
         <th>User Age</th>
         <th>User Skype</th>
+        <th>User Hobbies</th>
+        <th>User Telephones</th>
+        <th>User Nickname</th>
       </thead>
       <tbody>
         <tr v-for="(user, index) in users">
@@ -15,6 +19,9 @@
           <td>{{ user.email }}</td>
           <td>{{ user.age }}</td>
           <td>{{ user.skype }}</td>
+          <td>{{ user.hobbies }}</td>
+          <td>{{ user.telephones }}</td>
+          <td>{{ user.nickname }}</td>
         </tr>
       </tbody>
     </table>
@@ -22,20 +29,14 @@
 </template>
 
 <script>
-import bus from '../bus'
-export default {
-  data () {
-    return {
-      users: []
+  export default {
+    props: ['users'],
+    data () {
+      return {
+        title: 'Users Table'
+      }
     }
-  },
-
-  created () {
-    bus.$on('user-added', users => {
-      this.users = users
-    })
   }
-}
 </script>
 
 <style lang="scss" scoped>
